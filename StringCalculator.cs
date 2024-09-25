@@ -3,7 +3,7 @@ public class StringCalculator
 {
     public int Add(string input)
     {
-        int result = AddEmptyString(input)
+        int result = AddEmptyString(input);
         return result; 
     }
 
