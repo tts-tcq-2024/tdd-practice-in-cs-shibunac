@@ -8,9 +8,15 @@ public class StringCalculator
         {
             return 0;
         }
-
         return 0; 
     }
 
-  
+  public int AddEmptyString(string input)
+  {
+      if (string.IsNullOrEmpty(input))
+        {
+            return 0;
+        }
+      return 0;
+  }
 }
