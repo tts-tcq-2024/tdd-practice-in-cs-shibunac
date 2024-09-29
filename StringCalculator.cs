@@ -7,7 +7,7 @@ public class StringCalculator
 
     if (string.IsNullOrEmpty(input))
     {
-      result = AddEmptyString(input);
+      result = 0;
     }
     else
     {
@@ -16,23 +16,62 @@ public class StringCalculator
     return result;
   }
 
-  public int AddEmptyString(string input)
-  {
-    if (string.IsNullOrEmpty(input))
-      return 0;
-    return 0;
-  }
 
   public int AddNumber(string input)
   {
-    string[] numberArray = input.Split(',');
+    var numberList = DelimeterCheck(input);
 
-    // Parse and sum the numbers
-    int sum = 0;
-    foreach (var number in numberArray)
+    // Convert to numbers and handle empty values
+    List<int> parsedNumbers = new List<int>();
+    foreach (var number in numberList)
     {
-      sum += int.Parse(number);
+      if (int.TryParse(number, out int result))
+      {
+        parsedNumbers.Add(result);
+      }
     }
-    return sum;
+
+    //throw for negative numbers if any
+    NegativeNoException(parsedNumbers);
+
+    // Ignore numbers greater than 1000
+    var calculatableNumber = LimitCheck(parsedNumbers);
+    return calculatableNumber.Sum();
+  }
+
+  private List<int> LimitCheck(List<int> parsedNumbers)
+  {
+    var filteredNumbers = parsedNumbers.Where(n => n <= 1000).ToList();
+    return filteredNumbers;
+  }
+
+  public void NegativeNoException(List<int> parsedNumbers)
+  {
+    var negativeNumbers = parsedNumbers.Where(n => n < 0).ToList();
+    if (negativeNumbers.Any())
+      throw new Exception($"Negatives not allowed: {string.Join(", ", negativeNumbers)}");
+  }
+
+  public string[] DelimeterCheck(string input)
+  {
+    // Custom delimiter check
+    string delimiterPattern = "//(.*?)\n";
+    string delimiters = ",|\n";
+    if (Regex.IsMatch(input, delimiterPattern))
+    {
+      Match match = Regex.Match(input, delimiterPattern);
+      string customDelimiter = match.Groups[1].Value;
+
+      // Support for delimiters of any length
+      customDelimiter = Regex.Escape(customDelimiter); // Escape special characters if present
+      delimiters = customDelimiter;
+
+      input = input.Substring(match.Length);
+    }
+
+    // Split by default or custom delimiters
+    var numList =  Regex.Split(input, delimiters);
+
+    return numList;
   }
 }
