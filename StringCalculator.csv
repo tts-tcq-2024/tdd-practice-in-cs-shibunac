@@ -1,0 +1,14 @@
+Test Case ID,Scenario,TestCaseName,Input,Expected Output,Condition
+TC01,Sum of an empty string,StringCalculator_EmptyString_ReturnZero(),"""""",0,Validates that an empty input returns 0
+TC02,Sum of a single number,StringCalculator_SingleNumber_ReturnItself(),"""555""",555,Validates that a single number returns itself
+TC03,Sum of two numbers separated by a comma,StringCalculator_NumbersSeparatedByCommass_ReturnsSum(),"""5,5,5""",15,Basic add functionality with two/more numbers
+TC04,Sum with newline delimiter,StringCalculator_NumbersSeparatedByNewlinesAndCommas_ReturnSum(),"""1\n2,3""",6,Validates handling of new line as delimiter
+TC05,Input only newlines,StringCalculator_InputWithOnlyNewlines_ReturnsZero(),"""\n\n""",0,Validates that multiple newlines return 0
+TC06,Only delimiters present,StringCalculator_MixedDelimitersWithWhitespace_ReturnsZero(),"""//;\\\\n\\""",0,Validates input with only delimiters
+TC07,Sum ignoring numbers greater than 1000,StringCalculator_NumbersGreaterThan1000_IgnoredInSum(),"""5,1001,2000""",5,Validates that 1001 is ignored
+TC08,Sum include all numbers less than or equal to 1000,StringCalculator_NumbersLessThanOrEqualTo1000_IncludedInSum(),"""1000,1001,505""",1505,Validates accept all numbers below 1001
+TC09,Handle negative number throwing exception,StringCalculator_NegativeNumber_ThrowNegativeNoException(),"""1,-2""","Exception: ""negatives not allowed: -2""",Validates negative handling
+TC10,Handle multiple negative numbers,StringCalculator_MultipleNegatives_ThrowNegativeNoExceptionForAll(),"""1,-2,-3""","Exception: ""negatives not allowed: -2, -3""",Validates multiple negative reporting
+TC11,Handle variable delimiters,StringCalculator_VariableDelimeters_ShouldBeIgnored(),"""//;\n1;2""",3,Validates custom delimiter handling
+TC12,Multiple custom delimiters,StringCalculator_MultipleDelimitersIgnored_ReturnsValidSum(),"""//[]\n123""",123,Validates delimiters of any length
+TC13,Multiple numbers with mix of delimiters,StringCalculator_MixedNumbersDelimiters_GetSumIgnoreAllDelimeters(),"""//;\n12;0,]""",12,Validates mixed delimiters functionality
