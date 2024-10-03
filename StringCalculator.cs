@@ -19,7 +19,7 @@ public class StringCalculator
   }
 
 
-  public int AddNumber(string input)
+  private int AddNumber(string input)
   {
     var numberList = DelimeterCheck(input);
 
@@ -34,7 +34,7 @@ public class StringCalculator
     }
 
     //throw for negative numbers if any
-    NegativeNoException(parsedNumbers);
+    HandleNegative(parsedNumbers);
 
     // Ignore numbers greater than 1000
     var calculatableNumber = LimitCheck(parsedNumbers);
@@ -47,14 +47,14 @@ public class StringCalculator
     return filteredNumbers;
   }
 
-  public void NegativeNoException(List<int> parsedNumbers)
+  private void HandleNegative(List<int> parsedNumbers)
   {
     var negativeNumbers = parsedNumbers.Where(n => n < 0).ToList();
     if (negativeNumbers.Any())
       throw new Exception($"Negatives not allowed: {string.Join(", ", negativeNumbers)}");
   }
 
-  public string[] DelimeterCheck(string input)
+  private string[] DelimeterCheck(string input)
   {
     // Custom delimiter check
     string delimiterPattern = "//(.*?)\n";
